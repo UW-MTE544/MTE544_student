@@ -1,4 +1,4 @@
-# ME597 - Autonomous Mobile Robots - Setup
+# MTE544 - Autonomous Mobile Robots - Setup
 
 ## Install pre-requisites of the course for x86_64 systems
 If you have not installed Ubuntu 22.04 yet, please do that first, please note this section is for **Windows x86_64** systems. If you are using MacOS with apple silicon, please skip this section and go to the next section.
@@ -53,7 +53,7 @@ If you have not installed Ubuntu 22.04 yet, please do that first, please note th
 23. Finally, install git with `sudo apt install git` in a terminal.
 
 #### Install ROS2
-Download the script (or if you installed ```git```, clone this repository with ```git clone https://github.com/ME597c/ME597c-Students.git```, then change the branch to ```setup``` with ```git checkout setup```)
+Download the script (or if you installed ```git```, clone this repository with ```git clone https://github.com/UW-MTE544/MTE544_student.git```, then change the branch to ```setup``` with ```git checkout setup```)
 
 Run the script (it needs sudo privilege, so you will need to type in your password when prompted):
 ```
