@@ -1,64 +1,92 @@
-# Autonomous Mobile Robots
+# ME597 - Autonomous Mobile Robots - Setup
+
+## Install pre-requisites of the course for x86_64 systems
+If you have not installed Ubuntu 22.04 yet, please do that first, please note this section is for **Windows x86_64** systems. If you are using MacOS with apple silicon, please skip this section and go to the next section.
+#### Install Ubuntu22.04 as a Virtual Machine
+##### Minimum System Requirements Recommended:
+1.Diskspace:40GB
+2.RAM:8-16 GB
+3.CPU @ least 10 GHz in total (~ 4 cores)
+
+##### Virtual Machine Instructions:
+1. Download [Ubuntu 22.04 Desktop AMD64](https://releases.ubuntu.com/jammy/ubuntu-22.04.5-desktop-amd64.iso).
+2. Download [VMWare Workstation 17](https://uofwaterloo-my.sharepoint.com/:u:/g/personal/m3ning_uwaterloo_ca/EYJ_HOFWwVZDp08AP8_M--EB3E3R30MSqH53rXgQJeGu2A?e=umutFn), this program was uploaded to UWaterloo's SharePoint, you will need to log in with your UWaterloo credentials to download it.
+3. Run the downloaded VMware installer.
+4. Follow the setup wizard and keep the default settings.
+5. Run VMware and keep the default settings, select “Use VMware Workstation 17 for Personal Use”.
+6. Choose “Create a New Virtual Machine” as shown below:
+    ![alt text](./figs/image-1.png)
+7. Select “Browse” and choose the directory for the Ubuntu discimage you have just downloaded:
+    ![alt text](./figs/image-2.png)
+8. Select “Next” and follow the Wizard instructions until you reach “Specify Disk Capacity”.
+9. As shown below, changes the settings under “Specify Disk Capacity” to be:
+    I. 30 (or more if you wish) in “Maximum disk size (GB)” instead of 25.
+    II. “Store virtual disk as a single file” for the virtual disk setting instead of multiple files.
+    ![alt text](./figs/image-3.png)
+10. Select “Next”, you will see a summary of your settings. Click on “Customize Hardware…”. The window below will open. Here you can select computational resources you want to reserve to your virtual machine. It is recommended to provide at least 4GB of RAM (8 if possible, depending on your host machine, you can see on the window the recommendations by VMWare based on the host machine), and 2 processor cores (4 if possible, depending on host machine, do not use all or more cores than your host has). You can also change these settings after the VM is created if you needto increase or decrease.
+    ![alt text](./figs/image-4.png)
+11. Close the Customize Hardware window, and then click on“Finish”.
+12. VMware should open and Ubuntu installation will start automatically.This step will take some time.
+13. Enter your password.
+14. Follow the setup, you should not need to change any default setting.
+15. Make sure the host machine has internet access.
+16. Go to VMware settings: Click “VM” at the top left and choose “Settings”, as shown below:
+    ![alt text](./figs/image-5.png)
+17. In the left menu, select “Network Adapter”. By default, NAT should be selected.
+18. Make sure that under Device Status, you have ‘Connected’ and ‘Connected at power on’ both selected.
+19. Surf the internet using Firefox. If you have internet, you have successfully configured the VMware network settings.
+20. To make sure you installed everything correctly,open a terminal via press `Ctrl+Shift+T`, and run:
+    ```
+    sudo apt update && sudo apt install lsb-core lsb-release
+    ```
+21. Then run the following command to check the version of Ubuntu:
+    ```
+    lsb_release -a
+    ```
+22. You should see something like this:
+    ```
+    Distributor ID: Ubuntu
+    Description: Ubuntu 22.04.4LTS
+    Release: 22.04
+    Codename:jammy
+    ```
+23. Finally, install git with `sudo apt install git` in a terminal.
+
+#### Install ROS2
+Download the script (or if you installed ```git```, clone this repository with ```git clone https://github.com/ME597c/ME597c-Students.git```, then change the branch to ```setup``` with ```git checkout setup```)
+
+Run the script (it needs sudo privilege, so you will need to type in your password when prompted):
+```
+sh setup_mte544.sh
+```
+that will take care of installing everything you need for this course, including setting up some environmental variables.
+
+## Install pre-requisites of the course for ARM64 systems
+If you are using MacOS with apple silicon, the script above will not work. Please follow this blog [How to Set Up VMware, Ubuntu 22, ROS2, and Gazebo on Arm64 (like Apple Silicon or Jetson)](https://medium.com/@MinghaoNing/how-to-set-up-vmware-ubuntu-22-ros2-and-gazebo-on-arm64-like-apple-silicon-or-jetson-5bb4db6ff297) to set up your VM.
+
+You can download the [VMWare for Mac](https://uofwaterloo-my.sharepoint.com/:u:/g/personal/m3ning_uwaterloo_ca/EcT9JtYERmdDgfo3bLKwcycBD9YJK1bTfYdmXHCT3Qe8Sw?e=ftKpPs) and the [Ubuntu 22.04 Desktop ARM64](https://uofwaterloo-my.sharepoint.com/:u:/g/personal/m3ning_uwaterloo_ca/EVgtqnAW51tKqpuYDOSf0vQB2sciaAPxsEJ6VpZDuztRsw?e=JJEYbZ) from the links provided.
+
+## Check your installation
+Once the script has finished the installation, you can quickly check the performance of your system with the Gazebo simulation. Open a terminal and run:
+```
+ros2 launch turtlebot3_gazebo turtlebot3_house.launch.py
+```
+You should see something like this:
+
+![image](figs/gazebo_window.png)
+
+At the bottom of the Gazebo window, you will see the ```Real Time Factor```, if this number is consistently below 0.5 (assuming you are not running anything else heavy on your VM or on your computer), this means that your simulation will likely be quite slow, and you may want to consider utilizing one of the alternative systems proposed (you may still use your system for code development and connecting with the real robot, just the testing in simulation might be slow).
 
 
-## Introduction
+## To check the latency of the topics in TurtleBot4s
+NOTE: This part may be needed when you will be using the physical robot to check the latency in the communications.
 
-This repo is made to help the students make a complete mobile robot stack from scratch! The course is covered in MTE544 at the University of Waterloo taught by 
-[Prof. Soo Jeon](https://uwaterloo.ca/mechanical-mechatronics-engineering/profile/soojeon). 
+Use the Latency check script like this:
 
-This set of labs and software stack was originally implemented by Prof. Yue Hu in the course MTE544.
+```
+./latency_check.py topic msgType
+# for example for scan topic
+./latency_check.py /scan LaserScan 
+```
 
-## What do you need to carry through this course?
-The course code is developed based on TurtleBot4 (tb4) topics but as long as you have a ROS/ROS2-based mobile robot with lidar, camera, IMU, and encoders you can follow all the labs. 
- 
-It is worth mentioning that you can still follow the course without a robot and only with simulation. 
 
-## Overview of the course
-The course starts with lab1, which covers how to run the tb4 or the simulation, then it covers reading the sensory data and the explanation of the sensory outputs, and how to log them. 
-
-The overall stack for a mobile robot can be summarized as something like this:
-![mobile_robotics_plan](overview.jpg)
-
-The development of this stack starts from LAB-2 by developing a closed-loop controller. You can see in the diagram the components that you will be developing in the remaining labs and how they are interconnected.
-
-## Structure of this repository
-This repository is divided in branches. Each lab will have its own branch. The main branch contains this readme file and some guidelines such as the two markdown files to run your robot in simulation and how to connect to the real robot.
-
-For each lab, switch to the respective branch to see the manual and codes.
-
-## Expected outcome for the labs
-
-By the end of this course, you should:
-- Have learned the basics of ROS2;
-- Be able to apply theoretical concepts to practical mobile robotics problems;
-- Have a complete software stack that can help you develop further features and functionalities for your robotic applications.
-
-## LAB-1 - Sensor data processing
-
-In this lab, we go over the ROS2 components and libraries in the form of reading and writing the sensory data.
-
-It will be clear how a middleware like ROS2 can be helpful when handling different processes both on the local and other machines. 
-
-You will learn how to log sensors' output when writing to the actuators to make the robot do different trajectories. Logging is one of the most important aspects of robotics. It provides denser information around the goal intended to achieve, so downstream decisions can be made more thoughtfully. 
-
-## LAB-2 - Closed-loop controller
-
-In this lab, you will learn how to lay a thin version of the overall stack. You will start laying the bricks by completing the closed-loop controller. 
-
-The closed loop controller is a concept already covered in your previous control course(s) (ME/MTE360 or a similar course if you are not an MME student). In this lab, you will learn how to implement that without using propriety software like MATLAB. 
-
-One major takeaway from this lab is how to take derivatives and integration from a stream of incoming data. This is extremely useful for real-world applications and is largely utilized in many engineering applications (not only robotics), especially when control is needed.
-
-You will also gain experience implementing Object Oriented Programming (OOP) in robotics using Python. 
-
-## LAB-3 - Localization
-
-In this lab, you will get familiar with different estimation methods for localization. 
-
-This part would be the implementation of a Particle Filter (PF).
-You will experience how the motion model of the mobile robot, a prior map and the real-time sensor measurement can be used to both have better localization.
-
-## LAB-4 - Path planning
-
-In this lab, all the stacks will come together. 
-All the modules will be activated: first, you will implement two different path-planning methods to design a path inside the maze; then, your controller should follow the waypoints from the path and use your localizer as feedback. As you are moving around, you should log the robot states and the waypoints designed, so afterward you can quantify the performance of your stack. 
