@@ -10,7 +10,7 @@ If you have not installed Ubuntu 22.04 yet, please do that first, please note th
 
 ##### Virtual Machine Instructions:
 1. Download [Ubuntu 22.04 Desktop AMD64](https://releases.ubuntu.com/jammy/ubuntu-22.04.5-desktop-amd64.iso).
-2. Download [VMWare Workstation 17](https://uofwaterloo-my.sharepoint.com/:u:/g/personal/m3ning_uwaterloo_ca/EYJ_HOFWwVZDp08AP8_M--EB3E3R30MSqH53rXgQJeGu2A?e=umutFn), this program was uploaded to UWaterloo's SharePoint, you will need to log in with your UWaterloo credentials to download it.
+2. Download [VMWare Workstation 17](https://uofwaterloo-my.sharepoint.com/:u:/g/personal/y526hu_uwaterloo_ca/IQBgaXmWNcHVTa2BUtYSPG6UAV5IZAQGZXFAlSO8s-WGJSo?e=M6icPU), this program was uploaded to UWaterloo's SharePoint, you will need to log in with your UWaterloo credentials to download it.
 3. Run the downloaded VMware installer.
 4. Follow the setup wizard and keep the default settings.
 5. Run VMware and keep the default settings, select “Use VMware Workstation 17 for Personal Use”.
@@ -62,9 +62,10 @@ sh setup_mte544.sh
 that will take care of installing everything you need for this course, including setting up some environmental variables.
 
 ## Install pre-requisites of the course for ARM64 systems
-If you are using MacOS with apple silicon, the script above will not work. Please follow this blog [How to Set Up VMware, Ubuntu 22, ROS2, and Gazebo on Arm64 (like Apple Silicon or Jetson)](https://medium.com/@MinghaoNing/how-to-set-up-vmware-ubuntu-22-ros2-and-gazebo-on-arm64-like-apple-silicon-or-jetson-5bb4db6ff297) to set up your VM.
+If you are using MacOS with apple silicon, the script above will not work. Please follow this blog [How to Set Up VMware, Ubuntu 22, ROS2, and Gazebo on Arm64 (like Apple Silicon or Jetson)](https://medium.com/@MinghaoNing/how-to-set-up-vmware-ubuntu-22-ros2-and-gazebo-on-arm64-like-apple-silicon-or-jetson-5bb4db6ff297) to set up your VM (originally developed by Dr. Minghao Ning, former MTE544 TA from 2023 to 2025).
 
-You can download the [VMWare for Mac](https://uofwaterloo-my.sharepoint.com/:u:/g/personal/m3ning_uwaterloo_ca/EcT9JtYERmdDgfo3bLKwcycBD9YJK1bTfYdmXHCT3Qe8Sw?e=ftKpPs) and the [Ubuntu 22.04 Desktop ARM64](https://uofwaterloo-my.sharepoint.com/:u:/g/personal/m3ning_uwaterloo_ca/EVgtqnAW51tKqpuYDOSf0vQB2sciaAPxsEJ6VpZDuztRsw?e=JJEYbZ) from the links provided.
+If the links in the page do not work, you can download the [VMWare for Mac](https://uofwaterloo-my.sharepoint.com/:u:/g/personal/y526hu_uwaterloo_ca/IQCSLZXjIhe-TKQtFbEjeMVwAXF8TmS5z-1Vh8R2fYk-Heg?e=ueU08K) and the [Ubuntu 22.04 Deskptop ARM64](https://uofwaterloo-my.sharepoint.com/:u:/g/personal/y526hu_uwaterloo_ca/IQAqOl4Eh3EPT43LS3NiR6oNAWHBgNSRnayt1CtyeTAALWk?e=DRYewX) from the links provided.
+
 
 ## Check your installation
 Once the script has finished the installation, you can quickly check the performance of your system with the Gazebo simulation. Open a terminal and set the TurtleBot3 model:
