@@ -64,7 +64,7 @@ that will take care of installing everything you need for this course, including
 ## Install pre-requisites of the course for ARM64 systems
 If you are using MacOS with apple silicon, the script above will not work. Please follow this blog [How to Set Up VMware, Ubuntu 22, ROS2, and Gazebo on Arm64 (like Apple Silicon or Jetson)](https://medium.com/@MinghaoNing/how-to-set-up-vmware-ubuntu-22-ros2-and-gazebo-on-arm64-like-apple-silicon-or-jetson-5bb4db6ff297) to set up your VM (originally developed by Dr. Minghao Ning, former MTE544 TA from 2023 to 2025).
 
-If the links in the page do not work, you can download the [VMWare for Mac](https://uofwaterloo-my.sharepoint.com/:u:/g/personal/y526hu_uwaterloo_ca/IQCSLZXjIhe-TKQtFbEjeMVwAXF8TmS5z-1Vh8R2fYk-Heg?e=ueU08K) and the [Ubuntu 22.04 Deskptop ARM64](https://uofwaterloo-my.sharepoint.com/:u:/g/personal/y526hu_uwaterloo_ca/IQAqOl4Eh3EPT43LS3NiR6oNAWHBgNSRnayt1CtyeTAALWk?e=DRYewX) from the links provided.
+If the links in the page do not work, you can download the [VMWare for Mac](https://uofwaterloo-my.sharepoint.com/:u:/g/personal/y526hu_uwaterloo_ca/IQCSLZXjIhe-TKQtFbEjeMVwAXF8TmS5z-1Vh8R2fYk-Heg?e=ueU08K) and the [Ubuntu 22.04 Deskptop ARM64](https://uofwaterloo-my.sharepoint.com/:u:/g/personal/y526hu_uwaterloo_ca/IQBa_f-3wKsvT6mrqEFOBsA0AQPxTKYfPNXmneWL_cdbyZs?e=qFUb9b) from the links provided.
 
 
 ## Check your installation
