@@ -42,7 +42,7 @@ Based on the ```List of groups``` excel sheet on LEARN, find your robot number a
 - Suppose that X is your robot number, open a terminal and run:
 ```
 cd ~/robohub/turtlebot4/
-./vpn/vpn.sh X
+./rendezvous_vpn/vpn.sh X
 ```
 - Output should contain: ```Remote Reachable```
 - Ask one of the TAs to enter the required password.
@@ -72,7 +72,7 @@ source ~/robohub/turtlebot4/configs/.bashrc
 export ROS_DOMAIN_ID=X
 ```
 - Then add the following file to your bashrc: ```source ~/.tb4_env```
-This is a temporary line you add to your bashrc for connection to tb4, when you want to work with your system at home, you should comment it by ``` # ``` characater.
+This is a temporary line you add to your bashrc for connection to tb4, when you want to work with your system at home, you should comment it by ``` # ``` character.
 
 
 ### Once you are able to see the topics, let the TAs know so you can move to the next step!!
