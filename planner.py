@@ -8,12 +8,12 @@ class planner:
 
         self.type=type_
 
-    
+
     def plan(self, goalPoint=[-1.0, -1.0]):
-        
+
         if self.type==POINT_PLANNER:
             return self.point_planner(goalPoint)
-        
+
         elif self.type==TRAJECTORY_PLANNER:
             return self.trajectory_planner()
 
@@ -27,5 +27,4 @@ class planner:
     def trajectory_planner(self):
         pass
         # the return should be a list of trajectory points: [ [x1,y1], ..., [xn,yn]]
-        # return 
-
+        # return

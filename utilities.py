@@ -3,49 +3,49 @@ from math import atan2, asin, sqrt
 M_PI=3.1415926535
 
 class Logger:
-    
+
     def __init__(self, filename, headers=["e", "e_dot", "e_int", "stamp"]):
-        
+
         self.filename = filename
 
         with open(self.filename, 'w') as file:
-            
+
             header_str=""
 
             for header in headers:
                 header_str+=header
                 header_str+=", "
-            
+
             header_str+="\n"
-            
+
             file.write(header_str)
 
 
     def log_values(self, values_list):
 
         with open(self.filename, 'a') as file:
-            
+
             vals_str=""
-            
+
             for value in values_list:
                 vals_str+=f"{value}, "
-            
+
             vals_str+="\n"
-            
+
             file.write(vals_str)
-            
+
 
     def save_log(self):
         pass
 
 class FileReader:
     def __init__(self, filename):
-        
+
         self.filename = filename
-        
-        
+
+
     def read_file(self):
-        
+
         read_headers=False
 
         table=[]
@@ -63,40 +63,39 @@ class FileReader:
 
                     read_headers=True
                     break
-            
+
             next(file)
-            
+
             # Read each line and extract values
             for line in file:
                 values = line.strip().split(',')
-                
-                row=[]                
-                
+
+                row=[]
+
                 for val in values:
                     if val=='':
                         break
                     row.append(float(val.strip()))
 
                 table.append(row)
-        
+
         return headers, table
-    
-    
+
+
 
 # TODO Part 3: Implement the conversion from Quaternion to Euler Angles
 def euler_from_quaternion(quat):
-    """
-    Convert quaternion (w in last place) to euler roll, pitch, yaw.
-    quat = [x, y, z, w]
-    """
+    x, y, z, w, = quat
 
-    # just unpack yaw
+    yaw = atan2(2.0*(w*z+x*y), 1.0-2.0*(y*y+z*z))
+
     return yaw
+
 
 
 #TODO Part 4: Implement the calculation of the linear error
 def calculate_linear_error(current_pose, goal_pose):
-        
+
     # Compute the linear error in x and y
     # Remember that current_pose = [x,y, theta, time stamp] and goal_pose = [x,y]
     # Remember to use the Euclidean distance to calculate the error.
@@ -117,5 +116,5 @@ def calculate_angular_error(current_pose, goal_pose):
     # Remember to handle the cases where the angular error might exceed the range [-π, π]
 
     ...
-    
+
     return error_angular
