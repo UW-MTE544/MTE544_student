@@ -5,6 +5,8 @@ from pid import PID_ctrl
 from utilities import euler_from_quaternion, calculate_angular_error, calculate_linear_error
 
 M_PI=3.1415926535
+MAX_LINEAR_VELOCITY = 0.22 #m/s -- for turtlebot4, this is 0.31
+MAX_ANGULAR_VELOCITY = 2.84 #rad/s -- for turtlebot4, this is 1.90
 
 P=0; PD=1; PI=2; PID=3
 
@@ -30,8 +32,9 @@ class controller:
 
         # TODO Part 4: Add saturation limits for the robot linear and angular velocity
 
-        linear_vel = ... if linear_vel > 1.0 else linear_vel
-        angular_vel= ... if angular_vel > 1.0 else angular_vel
+        linear_vel = MAX_LINEAR_VELOCITY if linear_vel > MAX_LINEAR_VELOCITY else linear_vel
+        angular_vel= MAX_ANGULAR_VELOCITY if angular_vel > MAX_ANGULAR_VELOCITY else angular_vel #for positive angular velocity
+        angular_vel= -MAX_ANGULAR_VELOCITY if angular_vel < -MAX_ANGULAR_VELOCITY else angular_vel #for negative angular velocity
 
         return linear_vel, angular_vel
 

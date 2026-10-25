@@ -29,7 +29,7 @@ class decision_maker(Node):
         super().__init__("decision_maker")
 
         #TODO Part 4: Create a publisher for the topic responsible for robot's motion
-        self.publisher=...
+        self.publisher= self.create_publisher(publisher_msg, publishing_topic, qos_publisher)
 
         publishing_period=1/rate
 
@@ -89,7 +89,9 @@ class decision_maker(Node):
         velocity, yaw_rate = self.controller.vel_request(self.localizer.getPose(), self.goal, True)
 
         #TODO Part 4: Publish the velocity to move the robot
-        ...
+        vel_msg.linear.x = velocity
+        vel_msg.angular.z = yaw_rate
+        self.publisher.publish(vel_msg)
 
 import argparse
 
@@ -106,9 +108,9 @@ def main(args=None):
 
     # TODO Part 4: instantiate the decision_maker with the proper parameters for moving the robot
     if args.motion.lower() == "point":
-        DM=decision_maker(...)
+        DM=decision_maker(Twist, "/cmd_vel", 10, [1.0, 1.0], 10, POINT_PLANNER)
     elif args.motion.lower() == "trajectory":
-        DM=decision_maker(...)
+        DM=decision_maker(Twist, "/cmd_vel", 10, None, 10, TRAJECTORY_PLANNER)
     else:
         print("invalid motion type", file=sys.stderr)
 
