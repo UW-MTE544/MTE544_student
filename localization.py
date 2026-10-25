@@ -7,6 +7,12 @@ from rclpy.node import Node
 from rclpy.qos import QoSProfile
 from nav_msgs.msg import Odometry as odom
 
+#Additional imports
+from rclpy.qos import ReliabilityPolicy
+from rclpy.qos import HistoryPolicy
+from rclpy.qos import DurabilityPolicy
+
+
 from rclpy import init, spin, shutdown
 
 rawSensor = 0
@@ -20,8 +26,8 @@ class localization(Node):
         # Remember to define your QoS profile based on the information available in "ros2 topic info /odom --verbose" as explained in Tutorial 3
 
 
-
-        odom_qos= QoSProfile(depth = 10)
+        # Same as Lab 1
+        odom_qos= QoSProfile(reliability=ReliabilityPolicy.BEST_EFFORT, durability=DurabilityPolicy.VOLATILE, history=HistoryPolicy.KEEP_LAST, depth=5)
 
         self.loc_logger=Logger("robot_pose.csv", ["x", "y", "theta", "stamp"])
         self.pose=None
@@ -51,10 +57,11 @@ class localization(Node):
 
         yaw = euler_from_quaternion(quat_values)
 
-        stamp = Time.from_msg(pose_msg.header.stamp).nanoseconds
+        # stamp = Time.from_msg(pose_msg.header.stamp).nanoseconds
+        stamp = pose_msg.header.stamp
 
 
-        self.odom_logger.log_values ([x_pos, y_pos, yaw, stamp])
+        # self.odom_logger.log_values ([x_pos, y_pos, yaw, stamp]) -- from Lab1
         self.pose=[x_pos, y_pos, yaw, stamp]
 
 
