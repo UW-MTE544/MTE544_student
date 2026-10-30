@@ -162,9 +162,9 @@ In a maximum of 3 pages (excluding the front page), report a comparison between 
 
 ## Submission
 
-Submit the report and the code on Dropbox (LEARN) in the corresponding folder. Only one submission per group is needed:
-- **Report**: one single pdf, **do not** put the pdf inside the zip file, submit it as an independent file;
-- **Code**: make sure to have commented your code! Submit one single zip file with everything (including the csv files obtained from the data log).
+Submit the report on Crowdmark and the code on Dropbox (LEARN) in the corresponding folder. Only one submission per group on each platform is needed:
+- **Report**: one single pdf, **do not** put the pdf inside the zip file, submit it as an independent file to Crowdmark, remember to add all group members to a group before submitting;
+- **Code**: make sure to have commented your code! Submit one single zip file with everything (including the csv files obtained from the data log) to Dropbox on LEARN in the folder corresponding to your section.
 
 
 Good luck!
