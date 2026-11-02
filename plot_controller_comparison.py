@@ -6,14 +6,14 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 ROOT = Path(__file__).resolve().parent / 'Plots'
-OUT = ROOT / 'comparison'
-OUT.mkdir(exist_ok=True)
+OUT = ROOT / 'report' / 'point'
+OUT.mkdir(parents=True, exist_ok=True)
 plt.rcParams.update({'font.size': 11, 'axes.spines.top': False, 'axes.spines.right': False})
 runs = {}
-for label, folder, prefix in [('P','p','p_'),('PID','pid','pid_'),('PI','pi','p_'),('PD','pd','pd_')]:
+for label, folder, prefix in [('P','p','p_'),('PID','pid','pid_')]:
     tables = {}
     for kind in ('linear','angular','robot_pose'):
-        path = ROOT / folder / (('' if kind == 'robot_pose' else prefix) + kind + '.csv')
+        path = ROOT / 'point' / folder / (('' if kind == 'robot_pose' else prefix) + kind + '.csv')
         with path.open() as f:
             rows = list(csv.reader(f))[1:]
         a = np.array([[float(v.strip()) for v in row if v.strip()] for row in rows if any(v.strip() for v in row)])

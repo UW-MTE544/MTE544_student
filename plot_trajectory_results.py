@@ -7,7 +7,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from planner import planner, TRAJECTORY_PLANNER
 ROOT=Path(__file__).resolve().parent/'Plots'
-OUT=ROOT/'trajectories_comparison'; OUT.mkdir(exist_ok=True)
+OUT=ROOT/'report'/'trajectories'; OUT.mkdir(parents=True, exist_ok=True)
 plt.rcParams.update({'font.size':11,'axes.spines.top':False,'axes.spines.right':False})
 def read(path, ns=False):
     with path.open() as f:
@@ -43,12 +43,19 @@ for ax,(shape,(pose,lin,ang,ref,dist)) in zip(axes,runs.items()):
     ax.scatter(*pose[0,:2],color='#059669',label='Start',zorder=4)
     ax.scatter(*pose[-1,:2],color='#dc2626',label='Final pose',zorder=4)
     ax.scatter(*ref[-1],marker='x',color='black',s=70,label='Goal')
-    ax.set(title=shape.capitalize(),xlabel='x (m)',ylabel='y (m)');ax.axis('equal');ax.grid(alpha=.25);ax.legend()
+    ax.set(title=shape.capitalize() + (' (planned x: 0–1 m)' if shape == 'parabola' else ' (planned x: 0–2.5 m)'),xlabel='x (m)',ylabel='y (m)');ax.axis('equal');ax.grid(alpha=.25);ax.legend()
 save(fig,'paths')
 fig,axes=plt.subplots(3,2,figsize=(12,10));fig.suptitle('PID trajectory errors — distinct references',fontsize=16)
 for col,(shape,(pose,lin,ang,ref,dist)) in enumerate(runs.items()):
     for row,t,v,title,unit in [(0,pose[:,-1],100*dist,'Distance to planned path','cm'),(1,lin[:,-1],lin[:,0],'Logged distance to final goal','m'),(2,ang[:,-1],ang[:,0],'Logged heading error to lookahead','rad')]:
-        ax=axes[row,col];ax.plot(t,v);ax.set(title=f'{shape.capitalize()}: {title}',xlabel='Elapsed time (s)',ylabel=unit);ax.grid(alpha=.25)
+        ax=axes[row,col]
+        color, style, marker = [('#059669', ':', '^'), ('#2563eb', '-', 'o'), ('#dc2626', '--', 's')][row]
+        ax.plot(t, v, color=color, linestyle=style, marker=marker,
+                markevery=max(1, len(t)//12), markersize=3, label=title)
+        ax.set(title=f'{shape.capitalize()}: {title}', xlabel='Elapsed time (s)',
+               ylabel=f'Error ({unit})')
+        ax.grid(alpha=.25)
+        ax.legend(fontsize=9)
 save(fig,'errors')
 fig,axes=plt.subplots(3,2,figsize=(12,10));fig.suptitle('PID trajectory robot states',fontsize=16)
 for col,(shape,(pose,*_)) in enumerate(runs.items()):
