@@ -20,14 +20,7 @@ By the end of this lab, participants will be able to:
 
 Check ```rubrics.md``` for the grading scheme of this lab.
 
-### NOTES for pre-lab activities
-Given the limited time in the lab, it is highly recommended to go through this manual and start (or complete) your implementation before the lab date, by working on your personal setup (VMWare, remote desktop, lent laptop), and using simulation for testing when needed to verify that your codes are working before coming into the lab. For simulation, refer to `tbt3Simulation.md` in the `main` branch.
-
-During the 3 hours in the lab, you want to utilize this time to test your code, work with the actual robot, get feedback from the TAs, and acquire the in-lab marks (check `rubrics.md` in the same branch).
-
-While in-lab, you are required to use the Desktop PCs and **NOT** your personal setup (VMWare, remote desktop, lent laptop). So, make sure that you have your modified files, either online or on a USB, with you to try it out in-lab. 
-
-### Pre-lab deliverable
+## Pre-lab deliverable
 A first version of the completed code is to be submitted **24 hours before the group's lab section** (e.g. groups on the Wednesday section must submit by Tuesday at 3 PM), along with a list of doubts/questions to be solved during the in-person lab section (optional, if needed). The code does not have to be perfect but should be the best attempt and commented. The in-person lab is intended primarily for **testing, troubleshooting, and receiving TA support**, rather than implementing the code from scratch. 
 
 The following penalties apply:
@@ -36,6 +29,11 @@ The following penalties apply:
 - **10 additional marks** for failing to demonstrate and explain a complete working simulation, including **all in-lab components**, within the first 20 minutes of the scheduled lab session.
 
 Students are encouraged to post on Piazza and reach out to the TAs for support ahead (at least 48-72h ahead is recommended) of their scheduled lab session to successfully complete the pre-lab deliverables.
+
+## In the lab
+During the 3 hours in the lab, you want to utilize this time to test your code, work with the actual robot, get feedback from the TAs, and acquire the in-lab marks (check `rubrics.md` in the same branch).
+
+While in-lab, you are required to use the Desktop PCs and **NOT** your personal setup (VMWare, remote desktop, lent laptop). So, make sure that you have your modified files, either online or on a USB, with you to try it out in-lab. 
 
 ## Part 1 - connecting to the robot (no marks)
 Open the [connectToUWtb4s.md](https://github.com/aalghooneh/MTE544_student/blob/main/connectToUWtb4s.md) markdown file in the main branch, and follow along. Read and follow each step carefully.
