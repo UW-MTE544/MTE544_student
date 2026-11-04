@@ -29,18 +29,18 @@ class decision_maker(Node):
     def __init__(self, publisher_msg, publishing_topic, qos_publisher, goalPoint, rate=10, motion_type=POINT_PLANNER, trajectory="parabola"):
 
         super().__init__("decision_maker")
-
+        #create velocity publisher
         self.publisher = self.create_publisher(publisher_msg, publishing_topic, qos_publisher)
 
         publishing_period=1/rate
         
         # Instantiate the controller
-        # TODO Part 5: Tune your parameters here (to be done in lab section)
+        # TODONE Part 5: Tune your parameters here (to be done in lab section)
     
+        #set the control gains and planner based on the motion type
         if motion_type == POINT_PLANNER:
             self.controller=controller(klp=0.2, klv=0.5, kap=0.8, kav=0.6)
             self.planner=planner(POINT_PLANNER)    
-    
     
         elif motion_type==TRAJECTORY_PLANNER:
             self.controller=trajectoryController(klp=0.2, klv=0.2, kli=0.2, kap=0.2, kav=0.0, kai=0.0)
@@ -109,7 +109,7 @@ class decision_maker(Node):
         self.last_control_stamp = stamp_key
         vel_msg=Twist()
         
-        # # TODO Part 3: Check if you reached the goal
+        # # TODONE Part 3: Check if you reached the goal
         # if type(self.goal) == list:
         #     reached_goal=True
         # else: 
@@ -121,7 +121,8 @@ class decision_maker(Node):
             final_goal = self.goal[-1]
         else:
             final_goal = self.goal
-
+        
+        #use the distance to the goal to determine if the robot has reached the goal, if it is within 5 cm of the goal, it is considered to have reached the goal
         distance_to_goal = calculate_linear_error(pose, final_goal)
         reached_goal = distance_to_goal <= 0.05
         
@@ -148,9 +149,12 @@ def main(args=None):
     
     init()
 
-    # TODO Part 3: You migh need to change the QoS profile based on whether you're using the real robot or in simulation.
+    # TODONE Part 3: You migh need to change the QoS profile based on whether you're using the real robot or in simulation.
     # Remember to define your QoS profile based on the information available in "ros2 topic info /odom --verbose" as explained in Tutorial 3
     
+    #use reliable QoS profile for the cmd_vel publisher to match the robot's subsciber
+    #use volatile durability to prevent replaying old messages to new subscribers
+    #keep the latest 10 publisher commands
     cmd_vel_qos = QoSProfile(
         reliability=ReliabilityPolicy.RELIABLE,
         durability=DurabilityPolicy.VOLATILE,

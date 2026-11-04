@@ -23,7 +23,7 @@ class localization(Node):
         # Remember to define your QoS profile based on the information available in "ros2 topic info /odom --verbose" as explained in Tutorial 3
 
         if USE_SIM:
-            # Match the simulator's /odom publisher and keep the latest 10 messages.
+            # Match the simulator's /odom publisher and keep the latest message.
             odom_qos = QoSProfile(
                 reliability=ReliabilityPolicy.RELIABLE,
                 durability=DurabilityPolicy.VOLATILE,
@@ -45,6 +45,7 @@ class localization(Node):
         
         if localizationType == rawSensor:
         # TODONE Part 3: subscribe to the position sensor topic (Odometry)
+        #incoming /odom messages invoke the odom_callback function to update the robot's pose
             self.create_subscription(odom, "/odom", self.odom_callback, odom_qos)
         else:
             print("This type doesn't exist", sys.stderr)
@@ -52,6 +53,7 @@ class localization(Node):
     
     def odom_callback(self, pose_msg):
         # TODONE Part 3: Read x,y, theta, and record the stamp
+        #pose = [x, y, yaw, ROS timestamp], yaw extracted from the quaternion in the pose_msg
         self.pose=[ pose_msg.pose.pose.position.x,
                     pose_msg.pose.pose.position.y,
                     euler_from_quaternion([pose_msg.pose.pose.orientation.x,

@@ -16,7 +16,9 @@ class controller:
     # def __init__(self, klp=0.2, klv=0.2, kli=0.2, kap=0.2, kav=1.2, kai=0.2): PID6
     def __init__(self, klp=0.2, klv=0.2, kli=0.2, kap=0.2, kav=0.2, kai=0.2):
         
-        # TODO Part 5 and 6: Modify the below lines to test your PD, PI, and PID controller (do in lab)
+        # TODONE Part 5 and 6: Modify the below lines to test your PD, PI, and PID controller (do in lab)
+
+        #set chosen controller (PID), gains, and set file name for logging the errors
         self.PID_linear=PID_ctrl(PID, klp, klv, kli, filename_="pid_sigmoid_linear.csv")
         self.PID_angular=PID_ctrl(PID, kap, kav, kai, filename_="pid_sigmoid_angular.csv")
 
@@ -34,6 +36,7 @@ class controller:
         # Values selected from turtlebot 4 documentation 
         # may need to be adjusted if negative values are used for the linear and angular velocity.
 
+        #limited linear velocity to be between 0 and 0.10 m/s, and angular velocity to be between -1.0 and 1.0 rad/s to ease tuning
         linear_vel = float(np.clip(linear_vel, 0.0, 0.10))
         angular_vel = float(np.clip(angular_vel, -1.0, 1.0))
         

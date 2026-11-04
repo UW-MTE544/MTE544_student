@@ -26,12 +26,14 @@ class planner:
         return x, y
 
     def trajectory_planner(self):
+        #if the trajectory is parabola, return a list of points along the parabola from (0,0) to (1,1) note the parabola was sized down to fit in the room
         if self.trajectory == "parabola":
             x_values = np.linspace(0.0, 1, 51)
             return [[float(x), float(x**2)] for x in x_values]
+        #if the trajectory is sigmoid, return a list of points along the sigmoid from (0,0) to (2.5,1)
         elif self.trajectory == "sigmoid":
             x_values = np.linspace(0.0, 2.5, 51)
             return [[float(x), float(2 / (1 + np.exp(-2 * x)) - 1)] for x in x_values]
-
+        #if the input trajectory is not recognized, raise an error
         raise ValueError("Unknown trajectory type: {}".format(self.trajectory))
 

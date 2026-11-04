@@ -66,6 +66,8 @@ class PID_ctrl:
         error_int = self.integral
 
         # TODONE Part 4: Log your errors
+
+        #collect the time stamp in seconds, latest error, error dot, and error integral and log them to the file
         stamp_seconds = Time.from_msg(stamp).nanoseconds / 1e9
         self.logger.log_values( [
             latest_error, error_dot, error_int, stamp_seconds
