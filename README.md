@@ -157,7 +157,7 @@ In a maximum of 3 pages (excluding the front page), report a comparison between 
 * Section 1 - the plot of the logged error for the trajectories. The plot should have, title, label name for axis, legends, different shapes/colors for each error, and grids.
   * The plots you need to provide are as follows (for those in curly brackets, it is best to have them in one figure):
     * The plot of P, PID controller for point controller, in which you have for all states for {e-t, edot-t}, and {x-t, y-t, th-t}, and {x-y}, {e-edot}.
-    * For your final chosen controller for part 6, provide the reason and the plot of the parabola and sigmoid trajectories {x-y} only, and if you had the plot of the linear and angular error that was recorded during the trajectory motion execution, then nice to provide that but it is not necessary.
+    * For your final chosen controller for part 6, provide the reason and the plot of the parabola and sigmoid trajectories {x-y} only, and if you had the plot of the linear and angular error that was recorded during the trajectory motion execution, then nice to provide that but it is not necessary. You must discuss the tuning process.
 * Section 2 - A table comparing the P and PID controllers in agility, accuracy, and overshoot numerically **for the point controller only**. You should find the metrics for these three quantities from automatic control concepts/previous control courses. 
 
 ## Submission
