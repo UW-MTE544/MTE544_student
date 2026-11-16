@@ -1,64 +1,167 @@
-# Autonomous Mobile Robots
-
+# LAB 4 - Path planning and navigation
 
 ## Introduction
 
-This repo is made to help the students make a complete mobile robot stack from scratch! The course is covered in MTE544 at the University of Waterloo taught by 
-[Prof. Yue Hu](https://uwaterloo.ca/mechanical-mechatronics-engineering/profile/y526hu). 
+Welcome to LAB 4 of the mobile robotics course! 
+In this lab, participants will gain experience with implementing a path planner and drive the robot using the obtained plan.
+By the end of this lab, participants will be able to:
+- Use a map to create a graph for graph-based path planner;
+- Generate a plan with the path planner and navigate the robot through the path to specified goals.
 
-This set of lab manuals was originally developed by Dr. Ahmad Algooneh (former MTE544 TA from 2021 to 2023).
+*Part 1* and *Part 2* are the same as in the previous labs they are here just for your convenience.
 
-## What do you need to carry through this course?
-The course code is developed based on TurtleBot4 (tb4) topics but as long as you have a ROS/ROS2-based mobile robot with lidar, camera, IMU, and encoders you can follow all the labs. 
- 
-It is worth mentioning that you can still follow the course without a robot and only with simulation. 
 
-## Overview of the course
-The course starts with lab1, which covers how to run the tb4 or the simulation, then it covers reading the sensory data and the explanation of the sensory outputs, and how to log them. 
+#### The summary of what you should learn is as following:
+You will learn how to:
+- Create a cost map from a pre-aquired map;
+- Generate an optimal path using the A* algorithm;
+- Execute a path on a mobile robot.
 
-The overall stack for a mobile robot can be summarized as something like this:
-![mobile_robotics_plan](overview.jpg)
+**NOTE** this Lab builds on top of Lab 2 and Lab 3. A complete solution to Lab 2 and Lab 3 is provided within this lab so that even if you did not conclude Lab 2 and Lab 3's implementation, you can still work on Lab 4 without penalties. You are welcome to replace some of the code with your own development from Lab 2 and Lab 3.
 
-The development of this stack starts from LAB-2 by developing a closed-loop controller. You can see in the diagram the components that you will be developing in the remaining labs and how they are interconnected.
+Check ```rubrics.md``` for the grading scheme of this lab.
 
-## Structure of this repository
-This repository is divided in branches. Each lab will have its own branch. The main branch contains this readme file and some guidelines such as the two markdown files to run your robot in simulation and how to connect to the real robot.
+### NOTES for pre-lab activities
+Given the limited time in the lab, it is highly recommended to go through this manual and start (or complete) your implementation before the lab date, by working on your personal setup (VMWare, remote desktop, lent laptop), and using simulation for testing when needed to verify that your codes are working before coming into the lab. For simulation, refer to `tbt3Simulation.md` in the `main` branch.
 
-For each lab, switch to the respective branch to see the manual and codes.
+During the 3 hours in the lab, you want to utilize this time to test your code, work with the actual robot, get feedback from the TAs, and acquire the in-lab marks (check `rubrics.md` in the same branch).
 
-## Expected outcome for the labs
+While in-lab, you are required to use the Desktop PCs and **NOT** your personal setup (VMWare, remote desktop, lent laptop). So, make sure that you have your modified files, either online or on a USB, with you to try it out in-lab. 
 
-By the end of this course, you should:
-- Have learned the basics of ROS2;
-- Be able to apply theoretical concepts to practical mobile robotics problems;
-- Have a complete software stack that can help you develop further features and functionalities for your robotic applications.
+### Pre-lab deliverable
+A first version of the completed code is to be submitted **24 hours before the group's lab section** (e.g. groups on the Wednesday section must submit by Tuesday at 3 PM), along with a list of doubts/questions to be solved during the in-person lab section (optional, if needed). The code does not have to be perfect but should be the best attempt and commented. The in-person lab is intended primarily for **testing, troubleshooting, and receiving TA support**, rather than implementing the code from scratch. 
 
-## LAB-1 - Sensor data processing
+The following penalties apply:
 
-In this lab, we go over the ROS2 components and libraries in the form of reading and writing the sensory data.
+- **5 marks** for failing to submit the preliminary code by the deadline.
+- **10 additional marks** for failing to demonstrate and explain a complete working simulation, including **all in-lab components**, within the first 20 minutes of the scheduled lab session.
 
-It will be clear how a middleware like ROS2 can be helpful when handling different processes both on the local and other machines. 
+Students are encouraged to post on Piazza and reach out to the TAs for support ahead (at least 48-72h ahead is recommended) of their scheduled lab session to successfully complete the pre-lab deliverables.
 
-You will learn how to log sensors' output when writing to the actuators to make the robot do different trajectories. Logging is one of the most important aspects of robotics. It provides denser information around the goal intended to achieve, so downstream decisions can be made more thoughtfully. 
+## Part 1 - connecting to the robot (no marks)
+Open the [connectToUWtb4s.md](https://github.com/aalghooneh/MTE544_student/blob/main/connectToUWtb4s.md) markdown file in the main branch, and follow along. Read and follow each step carefully.
 
-## LAB-2 - Closed-loop controller
+## Part 2 - Robot teleop (no marks)
 
-In this lab, you will learn how to lay a thin version of the overall stack. You will start laying the bricks by completing the closed-loop controller. 
+In this part, you will learn to play with the robot; you will get to undock it from the charger and then move it around by keyboard.  
+When you want to dock it again, It should be able to find it only when it is in less than ~0.5 meter around it. Note, that it doesn't
+necessarily goes to the dock that it was undocked from, it will just find the next available dock.
 
-The closed loop controller is a concept already covered in your previous control course(s) (ME/MTE360 or a similar course if you are not an MME student). In this lab, you will learn how to implement that without using propriety software like MATLAB. 
+The undock command goes through a [action server](https://docs.ros.org/en/humble/Tutorials/Intermediate/Writing-an-Action-Server-Client/Cpp.html).
 
-One major takeaway from this lab is how to take derivatives and integration from a stream of incoming data. This is extremely useful for real-world applications and is largely utilized in many engineering applications (not only robotics), especially when control is needed.
+```
+ros2 action send_goal /undock irobot_create_msgs/action/Undock {}
+```
+You robot should undock.
+If not, revisit *Part 1* - Connect to robot via VPN, and make sure the VPN terminal is still running and that you can still see the robot's topics. If you suspect the vpn isn't working, make sure you terminate it, and then run again.
 
-You will also gain experience implementing Object Oriented Programming (OOP) in robotics using Python. 
+Next run the teleop command to be able to move the robot manually around.
 
-## LAB-3 - Localization
+```
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
 
-In this lab, you will get familiar with different estimation methods for localization. 
+See the prompt for help on the keys. 
 
-This part would be the implementation of a Particle Filter (PF).
-You will experience how the motion model of the mobile robot, a prior map and the real-time sensor measurement can be used to both have better localization.
+To dock the robot, use:
 
-## LAB-4 - Path planning
+```
+ros2 action send_goal /dock irobot_create_msgs/action/Dock {}
+```
 
-In this lab, all the stacks will come together. 
-All the modules will be activated: first, you will implement two different path-planning methods to design a path inside the maze; then, your controller should follow the waypoints from the path and use your localizer as feedback. As you are moving around, you should log the robot states and the waypoints designed, so afterward you can quantify the performance of your stack. 
+## NOTE: when you open a new terminal, you need to source again and set the domain ID, or you will not see the topics:
+
+- Source the .bashrc file: source ~/robohub/turtlebot4/configs/.bashrc
+- Declare ros2 domain: export ROS_DOMAIN_ID=X (X being the number of your robot)
+
+## Part 3 - Map acquisition (5 marks)
+In the prelab, you can use the turtlebot house environment to acquire the map and use this for the remaining of the testing. During the pre-lab checks, we will check whether your code is able to complete a path in the map you acquired.
+
+In the lab, check the [Excel sheet](https://uofwaterloo-my.sharepoint.com/:x:/g/personal/y526hu_uwaterloo_ca/IQASPpxw2ujxRqVBTjfJIKwjASSwinTYxhClsL0GH1VvACo?e=GCf7sq) to see the time slots reserved for your group for mapping and then testing. Two groups will work at the same time due to time limitations. Choose one of the two entrances so that the two robots are each at a different one. Bring the robot to the dock at the entrance chosen, and then start your mapping/testing.
+
+You do not have to wait until your slot starts if the earlier slots have finished earlier, just start as soon as the previous groups are done.
+
+**Please try to finish within your allocated time.**
+
+**NOTE: Do not change the positioning of the robots, always put your robot exactly as indicated byt the tape on the floor. This is important to be able to use your map later on.**
+
+Undock the robot, put the robot in the entrance marked for you exactly as marked by the tape, and reset the odometry, and then acquire the map as you did in LAB-1 and save it as room for use in the planning.
+
+```
+# terminal 1: reset the odometry pose
+ros2 service call /reset_pose irobot_create_msgs/srv/ResetPose {}
+# terminal 2: run the SLAM
+ros2 launch turtlebot4_navigation slam.launch.py
+# terminal 3: view the results in RViz
+ros2 launch turtlebot4_viz view_robot.launch.py
+# terminal 4: move around the robot
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+# terminal 5: save the map
+ros2 run nav2_map_server map_saver_cli -f room
+``` 
+
+**Note: if you face "Failed to spin map subscription" error, just rerun the `ros2 run nav2_map_server map_saver_cli -f room`**.
+
+When the map is acquired, make sure you **don't pick up the robot** so you wouldn't alter the odometry. If by any change you did, put the robot back on the dock, then undock and reset the odometry. This is to avoid for you to map the enviornment again.
+
+**Show the map to a TA to score the marks associated to this part.**
+
+## Part 4 - Complete the A* algorithm (25 marks)
+A mostly-completed A* algorithm is provided in ```a_star.py```.
+
+For this part:
+- Follow the comments to complete the code in ```a_star.py``` to plan the path using the A* algorithm. 
+- Implement two different heuristics: Manhattan distance and Euclidean distance. A policy for switching between these two heuristics is not implemented, you are free to implement this the way you prefer (hard coded or with switching parameter or any other way).
+
+## Part 5 - Complete the code for testing the path (25 marks)
+To utilize the planner, it is necessary to create a cost map and define a goal pose. Differently from previous planners you have used, in this case the searching algorithm will create a list of poses that the robot has to follow (a path). So some adaptations to the code are necessary.
+
+For this part:
+- Complete the code in ```planner.py``` to create the cost map using the ```mapManipulator``` from ```mapUtilities.py```;
+- Complete the code in ```planner.py``` to create a trajectory that is a list of goal poses returned by the searching algorithm which correspond to the path to follow;
+- Complete the code in ```decisions.py``` to adapt the code for the path planner.
+- **Optional** - In ```decisions.py``` use the PID gains from your Lab2, if you could not finish Lab2 or could not obtain good values, ask a TA. Complete the code in ```localization.py``` with the Q, R, and P matrices you obtained in Lab3. If you could not obtain good values or you could not obtain any values, you can use ```rawSensors``` instead of ```kalmanFilter``` for the localizer.
+
+## Part 6 - Test your path planner (20 marks)
+To test the path planner:
+- Choose at least two different goal poses (can be consecutive goal points during the same execution) on your map that are significantly far from each other and perform path planning and navigation for each ot these two goals.
+- Perform the planning for each of these two goal poses with the two heuristics implemented in Part 4 (Manhattan and Euclidean).
+
+**For choosing a goal pose:**
+1. Open a terminal and run the mapPublisher.py: ```python3 mapPublisher.py```  
+2. In another terminal run the rviz2 with the given configuration: ```rviz2 -d pathPlanner.rviz```
+3. In another terminal run the decisions.py: ```python3 decisions.py```
+4. On rvzi2 use the 2D goal pose on the toolbar on top to choose the goal pose 
+5. Watch the robot go to the specified point 
+
+**Note, given that there is limited time and space in the lab, do the necessary for scoring the in-lab marks (see below), and the rest in simulation.**
+
+**In-lab marks**:
+**Check your allocated time slot for testing. Please try to finish within your allocated time.**
+
+- **Show the path execution with at least two goal poses and one heuristic to a TA to score 10 marks. Show the TA where are your goal poses within the map on RViz and what is the used heuristics.**
+
+
+## Conclusions - Written report (30 marks)
+You can do this part in the lab (time allowing) or at home. **Make sure you have the proper data saved**.
+
+Please prepare a written report containing on the front page:
+- Names (Family Name, First Name) of all group members;
+- Student ID of all group members;
+- Station number and robot number.
+
+In a maximum of 3 pages (excluding the front page), report the performance of the path planner. This report should contain the following:
+
+* Describe how you implemented the path planning and navigation for the robot from the planner to the actual motions of the robot, including how the provided code works.
+* Figures illustrating the map, with the trajectories generated for the two goal points overlayed on the map. Make sure to clearly mark the starting and ending locations of the robot.
+* Compare the two different heuristics (Manhattan and Euclidean distances, they can be on the same plot, but use different colors). Discuss the results. Are they different, if yes, why, if not why. Which one is better, and why?
+* See rubrics.md for additional details and marking scheme.
+
+## Submission
+
+Submit the report on Crowdmark and the code on Dropbox (LEARN) in the corresponding folder. Only one submission per group on each platform is needed:
+- **Report**: one single pdf, do not put the pdf inside the zip file, submit it as an independent file to Crowdmark, remember to add all group members to a group before submitting;
+- **Code**: make sure to have commented your code! Submit one single zip file with everything (including the csv files obtained from the data log) to Dropbox on LEARN in the folder corresponding to your section.
+
+
+Good luck!
